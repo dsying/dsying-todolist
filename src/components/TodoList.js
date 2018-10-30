@@ -1,14 +1,22 @@
 import React, { Component, Fragment } from 'react'
-
+import store from '../store/store'
 
 class TodoList extends Component{
 
     constructor(...args){
         super(...args)
-        this.state = {
-            initVal: 'xxx',
-            list: [1,2,3,4]
-        }
+        //1 从仓库中 获取初始数据
+        this.state = store.getState()
+
+        //2 订阅store,当store数据更新，触发回调函数
+        store.subscribe(()=>{
+            this.setState(()=>{
+                //debugger
+                console.log(store.getState())
+                return store.getState()
+            })
+        })
+
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleBtnClick = this.handleBtnClick.bind(this)
         this.handleItemClick = this.handleItemClick.bind(this)
@@ -33,30 +41,27 @@ class TodoList extends Component{
 
     handleInputChange(e){
         const value = e.target.value
-        this.setState((prevState)=>{
-            return {
-                initVal: value
-            }
-        })
+        const action = {
+            type: 'input_val_change',
+            value: value
+        }
+        store.dispatch(action)
     }
 
     handleBtnClick(){
-        this.setState((prevState)=>{
-            return {
-                initVal: '',
-                list: [...prevState.list,prevState.initVal]
-            }
-        })
+        const action = {
+            type: 'add_new_item',
+            value: this.state.initVal
+        }
+        store.dispatch(action)
     }
 
     handleItemClick(e){
-        const index = e.target.getAttribute('index')
-        
-        this.setState((prevState)=>{
-            const list = [...prevState.list]
-            list.splice(index,1)
-            return {list}
-        })
+        const action = {
+            type: 'delete_by_index',
+            value: e.target.getAttribute('index')
+        }
+        store.dispatch(action)
     }
 }
 
