@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import store from '../store/store'
+import TodoListUI from './TodoListUI'
 
 class TodoList extends Component{
 
@@ -23,20 +24,12 @@ class TodoList extends Component{
     }
 
     render(){
-        return (
-            <Fragment>
-                <input type="text" value={this.state.initVal} onChange={this.handleInputChange}/>
-                <button onClick={this.handleBtnClick}>add</button>
-                <ul>
-                    {
-                        this.state.list.map((n,i,arr) => {
-                            return <li key={i} index={i} onClick={this.handleItemClick}>{n}</li>
-                        })
-                    }
-                </ul>
-            </Fragment>
-            
-        )
+        return <TodoListUI 
+            initVal={this.state.initVal}
+            handleInputChange={this.handleInputChange}
+            handleBtnClick={this.handleBtnClick}
+            list={this.state.list}
+            handleItemClick={this.handleItemClick}/>
     }
 
     handleInputChange(e){

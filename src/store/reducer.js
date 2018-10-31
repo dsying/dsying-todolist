@@ -15,7 +15,7 @@ function reducer(prevState=initState,action){
                 list: [...prevState.list,action.value]
             })
         case 'delete_by_index':
-            debugger
+            //debugger
             const list = JSON.parse(JSON.stringify(prevState.list))
             list.splice(action.value,1)
             return Object.assign({},prevState,{
