@@ -12,7 +12,7 @@ function reducer(prevState=initState,action){
         case 'add_new_item':
             return Object.assign({},prevState,{
                 initVal: '',
-                list: [...prevState.list,action.value]
+                list: [...prevState.list,prevState.initVal]
             })
         case 'delete_by_index':
             //debugger
